@@ -1,0 +1,30 @@
+name: Deploy no Servidor Ubuntu
+
+# O workflow será disparado sempre que você fizer um 'git push' na branch main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa o código do repositório
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # 2. Conecta no seu servidor via SSH usando as portas e chaves do Pinggy
+      - name: Executar comandos remotos via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            echo "Conectado ao servidor com sucesso!"
+            cd /var/www/meu_projeto_flask
+            git pull origin main
+            # Adicione aqui comandos para reiniciar seu app se necessário (ex: sudo systemctl restart meu_app)
