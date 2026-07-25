@@ -26,5 +26,5 @@ jobs:
           script: |
             echo "Conectado ao servidor com sucesso!"
             cd /var/www/meu_projeto_flask
-            git pull origin main
+            git pull origin development
             # Adicione aqui comandos para reiniciar seu app se necessário (ex: sudo systemctl restart meu_app)
